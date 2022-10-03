@@ -48,6 +48,7 @@ class Channel(models.Model):
         message_values = message.message_format()[0]
         device_ids = []
         author_id = message_values['author_id'][0]
+        print(message_values)
 
         for channel in self:
             for partner in channel.channel_partner_ids:
@@ -96,7 +97,7 @@ class Channel(models.Model):
             # delete <p></p>
             'body': message['body'][3:-4],
             'body_html': message['body'],
-            'channel_ids': message['channel_ids'],
+            'channel_ids': message['res_id'],
         }
         self._mail_channel_firebase_notifications(message_json, device_ids)
 
