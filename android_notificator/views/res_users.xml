@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+  <data>
 
-        <record id="res_users_form_view_mail_firebase" model="ir.ui.view">
+    <record id="res_users_form_view_mail_firebase" model="ir.ui.view">
             <field name="name">res.users.form.view.mail.firebase</field>
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form"/>
@@ -16,12 +16,17 @@
                     </page>
                 </xpath>
             </field>
-        </record>
+    </record>
 
-        <act_window id="launch_firebase_wizard_res_users" name="Send firebase push notifications" binding_model="res.users" res_model="res.users.firebase.message" view_mode="form" target="new"/>
+    <act_window id="launch_firebase_wizard_res_users"
+                    name="Send firebase push notifications"
+                    binding_model="res.users"
+                    res_model="res.users.firebase.message"
+                    view_mode="form"
+                    target="new"/>
 
         <record model="ir.ui.view" id="view_res_users_firebase_message">
-            <field name="name">Send Firebase notifications to users</field>
+            <field name="name">res_users_firebase_message_form</field>
             <field name="model">res.users.firebase.message</field>
             <field name="arch" type="xml">
                 <form string="Add URL">
@@ -40,6 +45,6 @@
                 </form>
             </field>
         </record>
-
-    </data>
+  
+  </data>
 </odoo>

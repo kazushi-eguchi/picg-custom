@@ -7,36 +7,19 @@
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <div id="business_documents" position="after">
-                <h2 id="mail_firebase">Android Notificator</h2>
-                <div class="col-12 col-lg-12 o_setting_box" title="Firebase WEB wizard">
-                            <!-- <div class="o_setting_right_pane">
+                <h2 id="mail_firebase">Android Notificator (Firebase key)</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-12 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <div class="content-group mt16">
+                                <label for="mail_firebase_key" class="col-6 col-lg-6 o_light_label"/>
                                 <field name="mail_firebase_key"/>
                             </div>
-                            <div class="o_setting_left_pane">
-                                <span class="o_form_label">Firebase key</span>
-                            </div> -->
 
-                            <div class="o_setting_right_pane">
-                                <field name="firebase_channel_notify"/>
-                            </div>
-                            <div class="o_setting_left_pane">
-                                <span class="o_form_label">Firebase channels(discuss) notify</span>
-                            </div>
-
-                            <div class="o_setting_right_pane">
-                                <field name="firebase_message_post_notify"/>
-                            </div>
-                            <div class="o_setting_left_pane">
-                                <span class="o_form_label">Firebase chatter(records) notify</span>
-                            </div>
-                            <!-- <div class="o_setting_right_pane">
-                                <field name="firebase_white_list_models"/>
-                            </div>
-                            <div class="o_setting_left_pane">
-                                <span class="o_form_label">White list of chatter models enable</span>
-                            </div> -->
+                        </div>
+                    </div>
                 </div>
-                <h2 id="firebase_wizard">Android Notificator (Wizard users)</h2>
+                <h2 id="firebase">Website visitors leads wizard</h2>
                 <div>
                     <div class="col-12 col-lg-12 o_setting_box" title="Firebase WEB wizard">
                         <div class="o_setting_right_pane">
