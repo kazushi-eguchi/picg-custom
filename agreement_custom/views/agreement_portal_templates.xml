@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - Víctor Martínez
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+            id="portal_my_home_agreement"
+            name="Portal My Home : Agreement entries"
+            inherit_id="portal.portal_my_home"
+            priority="30"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Agreements</t>
+                <t t-set="url" t-value="'/my/agreements'"/>
+                <t t-set="placeholder_count" t-value="'agreement_count'"/>
+            </t>
+        </xpath>
+    </template>
+        <template id="portal_my_agreements" name="My Agreements">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Agreements</t>
+            </t>
+            <t t-if="agreements" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Contract #</th>
+                        <th class='d-none d-md-table-cell'>Date</th>
+                        <th class='d-none d-md-table-cell'>Date end</th>
+                        <th class='text-right'>Reference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="agreements" t-as="agreement">
+                        <tr>
+                            <td>
+                                <a
+                                    t-att-href="agreement.get_portal_url()"
+                                    t-attf-class="tr_agreement_link"
+                                    t-att-title="agreement.name"
+                                >
+                                    <t t-esc="agreement.name" />
+                                </a>
+                            </td>
+                            <td class="d-none d-md-table-cell">
+                                <span t-field="agreement.date_begin" />
+                            </td>
+                            <td class="d-none d-md-table-cell">
+                                <span t-field="agreement.date_end" />
+                            </td>
+                            <td class='text-right'>
+                                <span t-field="agreement.code" />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+</odoo>
