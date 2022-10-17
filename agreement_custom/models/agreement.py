@@ -11,6 +11,7 @@ class AgreementPortal(models.Model):
     _description = 'AgreementPortal'
     _inherit = [
         "agreement",
+        # "portal.mixin",
     ]
 
     def _compute_access_url(self):
