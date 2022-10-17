@@ -7,11 +7,10 @@ from odoo.tests import Form
 from odoo.tools.translate import _
 
 
-class AgreementPortal(models.Model):
-    _description = 'AgreementPortal'
+class Agreement(models.Model):
     _inherit = [
         "agreement",
-        # "portal.mixin",
+        "portal.mixin",
     ]
 
     def _compute_access_url(self):
