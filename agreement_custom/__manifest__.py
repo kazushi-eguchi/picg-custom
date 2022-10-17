@@ -20,11 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'agreement', 'agreement_legal', "portal"],
+    'depends': ['base', "account",  'agreement', 'agreement_legal', "portal"],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'security/agreement_security.xml',
+        'views/agreement.xml',
         'views/agreement_portal_templates.xml',
         'views/templates.xml',
     ],

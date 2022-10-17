@@ -8,10 +8,12 @@ from odoo.tools.translate import _
 
 
 class Agreement(models.Model):
-    _inherit = [
-        "agreement",
-        "portal.mixin",
-    ]
+    _name = "agreement"
+    _inherit = ["agreement", "portal.mixin"]
+
+    signature = fields.Binary("signature")
+    signed_by = fields.Char("Signed by")
+    signed_on = fields.Datetime("Signed on")
 
     def _compute_access_url(self):
         for record in self:

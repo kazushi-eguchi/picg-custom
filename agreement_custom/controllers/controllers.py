@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 import logging
+import binascii
+
+
+from odoo import fields, http, SUPERUSER_ID, _
 from odoo import _, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 
+from odoo.addons.portal.controllers.mail import _message_post_helper
 from odoo.addons.portal.controllers.portal import CustomerPortal, pager as portal_pager
+from odoo.addons.portal.controllers import portal
 
 
 class PortalAgreement(CustomerPortal):
@@ -104,7 +110,46 @@ class PortalAgreement(CustomerPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
         values = self._agreement_get_page_view_values(agreement_sudo, access_token, **kw)
-        return request.render("agreement.portal_agreement_page", values)
+        return request.render("agreement_custom.portal_agreement_page", values)
+
+    @http.route(['/my/agreements/<int:agreement_id>/accept'], type='json', auth="public", website=True)
+    def portal_quote_accept(self, agreement_id, access_token=None, name=None, signature=None):
+        print("cht")
+        # get from query string if not on json param
+        access_token = access_token or request.httprequest.args.get('access_token')
+        try:
+            agreement_sudo = self._document_check_access('agreement', agreement_id, access_token=access_token)
+        except (AccessError, MissingError):
+            return {'error': _('Invalid order.')}
+
+        # if not order_sudo.has_to_be_signed():
+        #     return {'error': _('The order is not in a state requiring customer signature.')}
+        if not signature:
+            return {'error': _('Signature is missing.')}
+
+        try:
+            agreement_sudo.write({
+                'signed_by': name,
+                'signed_on': fields.Datetime.now(),
+                'signature': signature,
+            })
+            request.env.cr.commit()
+        except (TypeError, binascii.Error) as e:
+            return {'error': _('Invalid signature data.')}
+        # pdf = request.env.ref('sale.action_report_saleorder').with_user(SUPERUSER_ID)._render_qweb_pdf([order_sudo.id])[
+        #     0]
+        #
+        # _message_post_helper(
+        #     'sale.order', order_sudo.id, _('Order signed by %s') % (name,),
+        #     attachments=[('%s.pdf' % order_sudo.name, pdf)],
+        #     **({'token': access_token} if access_token else {}))
+
+        query_string = '&message=sign_ok'
+
+        return {
+            'force_refresh': True,
+            'redirect_url': agreement_sudo.get_portal_url(query_string=query_string),
+        }
 
 #     @http.route('/agreement_custom/agreement_custom/objects', auth='public')
 #     def list(self, **kw):
