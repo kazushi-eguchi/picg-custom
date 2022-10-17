@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import logging
 from odoo import _, http
 from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
@@ -39,8 +39,9 @@ class PortalAgreement(CustomerPortal):
         website=True,
     )
     def portal_my_agreements(
-            self, page=1, date_begin=None, date_end=None, sortby=None, **kw
+            self, page=1, start_date=None, end_date=None, sortby=None, **kw
     ):
+
         values = self._prepare_portal_layout_values()
         agreement_obj = request.env["agreement"]
         # Avoid error if the user does not have access.
@@ -61,10 +62,10 @@ class PortalAgreement(CustomerPortal):
 
         # pager
         pager = portal_pager(
-            url="/my/contracts",
+            url="/my/agreements",
             url_args={
-                "start_date": date_begin,
-                "end_date": date_end,
+                "start_date": start_date,
+                "end_date": end_date,
                 "sortby": sortby,
             },
             total=agreement_count,
@@ -78,7 +79,7 @@ class PortalAgreement(CustomerPortal):
         request.session["my_agreements_history"] = agreements.ids[:100]
         values.update(
             {
-                "date": date_begin,
+                "date": start_date,
                 "agreements": agreements,
                 "page_name": "Agreements",
                 "pager": pager,
