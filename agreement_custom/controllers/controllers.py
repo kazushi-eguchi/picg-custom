@@ -45,7 +45,7 @@ class PortalAgreement(CustomerPortal):
         website=True,
     )
     def portal_my_agreements(
-            self, page=1, start_date=None, end_date=None, sortby=None, **kw
+            self, page=1, start_date=None, end_date=None, sortby=None, message=False, **kw
     ):
 
         values = self._prepare_portal_layout_values()
@@ -83,6 +83,7 @@ class PortalAgreement(CustomerPortal):
             domain, order=order, limit=self._items_per_page, offset=pager["offset"]
         )
         request.session["my_agreements_history"] = agreements.ids[:100]
+
         values.update(
             {
                 "date": start_date,
@@ -102,7 +103,8 @@ class PortalAgreement(CustomerPortal):
         auth="public",
         website=True,
     )
-    def portal_my_agreement_detail(self, agreement_id, access_token=None, **kw):
+    def portal_my_agreement_detail(self, agreement_id, access_token=None, message=False, **kw):
+        print(message)
         try:
             agreement_sudo = self._document_check_access(
                 "agreement", agreement_id, access_token
@@ -110,15 +112,24 @@ class PortalAgreement(CustomerPortal):
         except (AccessError, MissingError):
             return request.redirect("/my")
         values = self._agreement_get_page_view_values(agreement_sudo, access_token, **kw)
+        values.update(
+            {
+                "message": message,
+            }
+        )
         return request.render("agreement_custom.portal_agreement_page", values)
 
-    @http.route(['/my/agreements/<int:agreement_id>/accept'], type='json', auth="public", website=True)
-    def portal_quote_accept(self, agreement_id, access_token=None, name=None, signature=None):
+    @http.route(
+        ['/my/agreements/<int:agreement_id>/accept'],
+        type='json',
+        auth="public",
+        website=True)
+    def portal_agreement_accept(self, agreement_id, access_token=None, name=None, signature=None, **kw):
         print("cht")
         # get from query string if not on json param
         access_token = access_token or request.httprequest.args.get('access_token')
         try:
-            agreement_sudo = self._document_check_access('agreement', agreement_id, access_token=access_token)
+            agreement_sudo = self._document_check_access('agreement', agreement_id, access_token=access_token, **kw)
         except (AccessError, MissingError):
             return {'error': _('Invalid order.')}
 

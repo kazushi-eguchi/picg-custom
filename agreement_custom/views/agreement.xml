@@ -8,7 +8,9 @@
         <field name="inherit_id" ref="agreement_legal.partner_agreement_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_signed_date']" position="after">
-                <field name="signature"/>
+                <field name="signature" widget="image" modifiers="{}"/>
+                <field name="signed_by"/>
+                <field name="signed_on"/>
             </xpath>
         </field>
     </record>
