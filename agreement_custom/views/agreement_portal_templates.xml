@@ -17,7 +17,7 @@
         </xpath>
     </template>
 
-    <template id="portal_my_agreements" name="My Agreements">
+    <template id="portal_my_agreements" name="My Agreements" >
         <t t-call="portal.portal_layout">
             <t t-set="breadcrumbs_searchbar" t-value="True"/>
             <t t-call="portal.portal_searchbar">
@@ -90,7 +90,7 @@
                     <div id="quote_content" class="col-12 col-lg justify-content-end">
 
                         <!-- modal relative to the actions sign and pay -->
-                        <div role="dialog" class="modal fade" id="modalaccept">
+                        <div role="dialog" class="modal fade" id="modalaccept" t-if="agreement.is_open">
                             <div class="modal-dialog" t-if="not agreement.signature">
                                 <form id="accept" method="POST" t-att-data-order-id="agreement.id"
                                       t-att-data-token="agreement.access_token"
@@ -226,7 +226,7 @@
                         <!-- bottom actions -->
                         <div t-if="not agreement.signature"
                              class="row justify-content-center text-center d-print-none pt-1 pb-4">
-                            <a role="button" class="btn btn-primary" data-toggle="modal" data-target="#modalaccept"
+                            <a t-if="agreement.is_open" role="button" class="btn btn-primary" data-toggle="modal" data-target="#modalaccept"
                                href="#">
                                 <i class="fa fa-check"/>
                                 <t t-if="agreement.signature">Sign</t>
@@ -250,13 +250,13 @@
                             <!--                        </div>-->
                         </div>
 
-                        <!-- chatter -->
-                        <div id="agreement_communication" class="mt-4">
-                            <h2>History</h2>
-                            <t t-call="portal.message_thread">
-                                <t t-set="object" t-value="agreement"/>
-                            </t>
-                        </div>
+<!--                        &lt;!&ndash; chatter &ndash;&gt;-->
+<!--                        <div id="agreement_communication" class="mt-4">-->
+<!--                            <h2>History</h2>-->
+<!--                            <t t-call="portal.message_thread">-->
+<!--                                <t t-set="object" t-value="agreement"/>-->
+<!--                            </t>-->
+<!--                        </div>-->
                     </div><!-- // #quote_content -->
 <!--                    Main-->
 

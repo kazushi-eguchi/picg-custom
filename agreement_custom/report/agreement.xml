@@ -1,0 +1,13 @@
+<odoo>
+    <template id="report_agreement_document_inherit" inherit_id="agreement_legal.report_agreement_document">
+        <xpath expr="//span[@t-field='doc.partner_contact_id.function']" position="after">
+            <div><span t-field="doc.signature" t-options='{"widget": "image","style":"height:150px"}' style="height:100px"/>
+            </div>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.company_contact_id.function']" position="after">
+            <div>
+            <span t-field="doc.assigned_user_id.digital_signature" t-options='{"widget": "image","style":"height:150px"}' style="height:100px"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

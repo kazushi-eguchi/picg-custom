@@ -19,7 +19,7 @@ class PortalAgreement(CustomerPortal):
         if "agreement_count" in counters:
             agreement_model = request.env["agreement"]
             agreement_count = (
-                agreement_model.search_count([])
+                agreement_model.search_count([('in_portal', '=', True)])
                 if agreement_model.check_access_rights("read", raise_exception=False)
                 else 0
             )
@@ -38,6 +38,11 @@ class PortalAgreement(CustomerPortal):
     def _get_filter_domain(self, kw):
         return []
 
+    def _agreement_domain(self):
+        return [
+            ('in_portal', '=', True)
+        ]
+
     @http.route(
         ['/my/agreements', "/my/contracts/page/<int:page>"],
         type="http",
@@ -53,7 +58,9 @@ class PortalAgreement(CustomerPortal):
         # Avoid error if the user does not have access.
         if not agreement_obj.check_access_rights("read", raise_exception=False):
             return request.redirect("/my")
-        domain = self._get_filter_domain(kw)
+        # domain = self._get_filter_domain(['kw'])
+        domain = self._agreement_domain()
+        print(self._get_filter_domain(['kw']))
         searchbar_sortings = {
             "date": {"label": _("Date"), "order": "start_date desc"},
             "name": {"label": _("Name"), "order": "name desc"},

@@ -11,6 +11,17 @@
                 <field name="signature" widget="image" modifiers="{}"/>
                 <field name="signed_by"/>
                 <field name="signed_on"/>
+                <field name="in_portal"  invisible="0"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="before">
+                <widget name="web_ribbon" title="Open" bg_color="bg-info" attrs="{'invisible': [('in_portal', '!=', True)]}"/>
+                <widget name="web_ribbon" title="Close" bg_color="bg-danger" attrs="{'invisible': [('in_portal', '=', True)]}"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button string="hide portal" name="toggle_portal" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('in_portal', '!=', True)]}"/>
+                <button string="view portal" name="toggle_portal" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('in_portal', '=', True)]}"/>
             </xpath>
         </field>
     </record>

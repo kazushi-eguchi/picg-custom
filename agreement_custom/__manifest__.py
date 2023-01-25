@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'security/agreement_security.xml',
+        'report/agreement.xml',
         'views/agreement.xml',
         'views/agreement_portal_templates.xml',
         'views/templates.xml',

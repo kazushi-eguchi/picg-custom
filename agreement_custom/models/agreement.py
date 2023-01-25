@@ -14,6 +14,7 @@ class Agreement(models.Model):
     signature = fields.Binary("signature")
     signed_by = fields.Char("Signed by")
     signed_on = fields.Datetime("Signed on")
+    in_portal = fields.Boolean("In Portal")
 
     def _compute_access_url(self):
         for record in self:
@@ -27,3 +28,15 @@ class Agreement(models.Model):
             "target": "self",
             "url": self.get_portal_url(),
         }
+
+    def toggle_portal(self):
+        if self.in_portal:
+            self.in_portal = False
+            return
+        if not self.in_portal:
+            self.in_portal = True
+            return
+
+    def is_open(self):
+        print(self.is_open)
+        return self.is_open

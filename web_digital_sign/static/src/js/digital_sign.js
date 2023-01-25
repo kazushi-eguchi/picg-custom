@@ -23,7 +23,8 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
         init: function (parent, name, record) {
             this._super.apply(this, arguments);
             this.sign_options = {
-                'decor-color': '#D1D0CE',
+//                'decor-color': '#D1D0CE',
+                'decor-color': '#FFFFFF',
                 'color': '#000',
                 'background-color': '#fff',
                 'height': '150',
@@ -47,7 +48,8 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
             this.$('> img').remove();
             this.$(".signature").attr("tabindex", "0");
             var sign_options = {
-                'decor-color': '#D1D0CE',
+                'decor-color': '#FFFFFF',
+//                'decor-color': '#D1D0CE',
                 'color': '#000',
                 'background-color': '#fff',
                 'height': '150',
@@ -122,7 +124,8 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
                     this.$('> img').remove();
                     this.$('.signature > canvas').remove();
                     var sign_options = {
-                        'decor-color': '#D1D0CE',
+//                        'decor-color': '#D1D0CE',
+                        'decor-color': '#FFFFFF',
                         'color': '#000',
                         'background-color': '#fff',
                         'height': '150',
@@ -135,7 +138,8 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
                 this.$('> canvas').remove();
                 if (!this.value) {
                     this.$(".signature").empty().jSignature("init", {
-                        'decor-color': '#D1D0CE',
+//                        'decor-color': '#D1D0CE',
+                        'decor-color': '#FFFFFF',
                         'color': '#000',
                         'background-color': '#fff',
                         'height': '150',
